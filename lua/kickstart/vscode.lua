@@ -34,14 +34,14 @@ vim.keymap.set('n', 'K', function()
   require('vscode').call 'workbench.action.nextEditor'
 end)
 vim.keymap.set('n', ',sf', function()
-  require('vscode').call 'workbench.action.quickOpen'
+  require('vscode').call 'find-it-faster.findFiles'
 end)
 vim.keymap.set('n', ',sg', function()
-  require('vscode').call 'workbench.action.findInFiles'
+  require('vscode').call 'find-it-faster.findWithinFiles'
 end)
 vim.keymap.set('n', ',ws', function()
   require('vscode').call 'workbench.action.showAllSymbols'
 end)
-vim.keymap.set('n', ',sw', function()
+vim.keymap.set('n', ',ds', function()
   require('vscode').call 'workbench.action.gotoSymbol'
 end)
