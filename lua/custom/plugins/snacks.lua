@@ -345,7 +345,7 @@ return {
       desc = 'Delete Buffer',
     },
     {
-      '<leader>cR',
+      '<leader>rf',
       function()
         Snacks.rename.rename_file()
       end,
@@ -425,6 +425,7 @@ return {
   init = function()
     -- modify existing layouts
     local layouts = require 'snacks.picker.config.layouts'
+    -- A copy of telescope with slight mods; make it vertical, reoder input and preview
     layouts.custom_telecope = {
       layout = {
         box = 'vertical',
@@ -461,7 +462,7 @@ return {
 
         -- These curently throw which-key errors
         -- Create some toggle mappings
-        -- Snacks.toggle.option('spell', { name = 'Spelling' }):map '<leader>us'
+        Snacks.toggle.option('spell', { name = 'Spelling' }):map '<leader>us'
         -- Snacks.toggle.option('wrap', { name = 'Wrap' }):map '<leader>uw'
         -- Snacks.toggle.diagnostics():map '<leader>ud'
         -- Snacks.toggle.option('conceallevel', { off = 0, on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2 }):map '<leader>uc'
