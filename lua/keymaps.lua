@@ -3,6 +3,19 @@
 
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
+--
+--make sure signature help has a nice rounded border and renders the markdown
+local function bordered_signature_help(_opts)
+  _opts = _opts or {}
+  return vim.lsp.buf.signature_help(vim.tbl_deep_extend('force', _opts, {
+    border = 'rounded',
+  }))
+end
+-- Remove the original keybinding for <C-s> in insert mode bc it doesn't render the boreder
+-- for some reason; not sure why...
+vim.keymap.del({ 'i', 's' }, '<c-s>')
+vim.keymap.set({ 'i', 's' }, '<c-s>', bordered_signature_help, { desc = 'Signature help' })
+vim.keymap.set('n', '<leader>gs', bordered_signature_help, { desc = 'Signature help' })
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
