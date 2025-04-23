@@ -273,14 +273,6 @@ return {
       desc = 'Goto Declaration',
     },
     {
-      'gr',
-      function()
-        Snacks.picker.lsp_references()
-      end,
-      nowait = true,
-      desc = 'References',
-    },
-    {
       'gI',
       function()
         Snacks.picker.lsp_implementations()
@@ -394,6 +386,14 @@ return {
       end,
       desc = 'Next Reference',
       mode = { 'n', 't' },
+    },
+    {
+      'grr',
+      function()
+        Snacks.picker.lsp_references()
+      end,
+      nowait = true,
+      desc = 'Find References',
     },
     {
       '[[',
