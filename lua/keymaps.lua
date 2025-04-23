@@ -15,7 +15,8 @@ end
 -- for some reason; not sure why...
 vim.keymap.del({ 'i', 's' }, '<c-s>')
 vim.keymap.set({ 'i', 's' }, '<c-s>', bordered_signature_help, { desc = 'Signature help' })
-vim.keymap.set('n', '<leader>gs', bordered_signature_help, { desc = 'Signature help' })
+vim.keymap.set('n', 'gs', bordered_signature_help, { desc = 'Signature help' })
+vim.keymap.set('n', 'gh', vim.lsp.buf.hover, { desc = 'Hover Documentation' })
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
@@ -78,4 +79,5 @@ vim.keymap.set('n', 'L', '$', { desc = 'Move to end of line' })
 -- switching buffers
 vim.keymap.set('n', 'J', ':bprev<CR>', { desc = 'Previous Buffer' })
 vim.keymap.set('n', 'K', ':bnext<CR>', { desc = 'Next Buffer' })
+
 -- vim: ts=2 sts=2 sw=2 et
