@@ -71,4 +71,8 @@ vim.opt.confirm = true
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
+-- split on words
+vim.opt.linebreak = true
+vim.opt.colorcolumn = "100"
+
 -- vim: ts=2 sts=2 sw=2 et
