@@ -1,3 +1,9 @@
+local draft_pr = "Please create a draft PR for this issue. Don't add a body, just the title and open the web "
+  .. 'interface. Print out the summary in markdown so I can paste it in.'
+local update_versions = 'Please update relevant app versions in in their respective files according to semver. (setup.py, pyproject.toml, etc)'
+local update_changelog = 'Please add changelog entries or update the current one based on the changes made. Entries should have a link to the'
+  .. 'github issue if one exists and can should capture the main changes made, but should be terse.'
+
 return {
   'folke/sidekick.nvim',
   opts = {
@@ -6,6 +12,11 @@ return {
       mux = {
         backend = 'tmux',
         enabled = true,
+      },
+      prompts = {
+        create_pr = draft_pr,
+        update_versions = update_versions,
+        update_changelog = update_changelog,
       },
     },
   },
@@ -24,42 +35,65 @@ return {
     {
       '<c-.>',
       function()
-        require('sidekick.cli').focus()
+        require('sidekick.cli').toggle()
       end,
-      mode = { 'n', 'x', 'i', 't' },
-      desc = 'Sidekick Switch Focus',
+      desc = 'Sidekick Toggle',
+      mode = { 'n', 't', 'i', 'x' },
     },
     {
       '<leader>aa',
       function()
-        require('sidekick.cli').toggle { focus = true }
+        require('sidekick.cli').toggle()
       end,
       desc = 'Sidekick Toggle CLI',
-      mode = { 'n', 'v' },
     },
+    {
+      '<leader>as',
+      function()
+        require('sidekick.cli').select()
+      end,
+      -- Or to select only installed tools:
+      -- require("sidekick.cli").select({ filter = { installed = true } })
+      desc = 'Select CLI',
+    },
+    {
+      '<leader>at',
+      function()
+        require('sidekick.cli').send { msg = '{this}' }
+      end,
+      mode = { 'x', 'n' },
+      desc = 'Send This',
+    },
+    {
+      '<leader>af',
+      function()
+        require('sidekick.cli').send { msg = '{file}' }
+      end,
+      desc = 'Send File',
+    },
+    {
+      '<leader>av',
+      function()
+        require('sidekick.cli').send { msg = '{selection}' }
+      end,
+      mode = { 'x' },
+      desc = 'Send Visual Selection',
+    },
+    {
+      '<leader>ap',
+      function()
+        require('sidekick.cli').prompt()
+      end,
+      mode = { 'n', 'x' },
+      desc = 'Sidekick Select Prompt',
+    },
+    -- Example of a keybinding to open Claude directly
     {
       '<leader>ac',
       function()
         require('sidekick.cli').toggle { name = 'claude', focus = true }
       end,
-      desc = 'Sidekick Claude Toggle',
-      mode = { 'n', 'v' },
-    },
-    {
-      '<leader>ag',
-      function()
-        require('sidekick.cli').toggle { name = 'grok', focus = true }
-      end,
-      desc = 'Sidekick Grok Toggle',
-      mode = { 'n', 'v' },
-    },
-    {
-      '<leader>ap',
-      function()
-        require('sidekick.cli').select_prompt()
-      end,
-      desc = 'Sidekick Ask Prompt',
-      mode = { 'n', 'v' },
+      desc = 'Sidekick Toggle Claude',
     },
   },
 }
