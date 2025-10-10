@@ -59,6 +59,9 @@ return {
       --    That is to say, every time a new file is opened that is associated with
       --    an lsp (for example, opening `main.rs` is associated with `rust_analyzer`) this
       --    function will be executed to configure the current buffer
+      vim.lsp.config('ty', {})
+      vim.lsp.enable 'ty'
+
       vim.api.nvim_create_autocmd('LspAttach', {
         group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
         callback = function(event)
@@ -194,8 +197,18 @@ return {
       --  - capabilities (table): Override fields in capabilities. Can be used to disable certain LSP features.
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
+      local util = require 'lspconfig.util'
       local servers = {
+        -- ty = {
+        --   settings = {
+        --     ty = {},
+        --   },
+        -- },
         pyright = {
+          root_dir = function(fname)
+            -- always use the folder where nvim was started
+            return util.root_pattern 'pyrightconfig.json'(fname) or util.find_git_ancestor(fname) or vim.loop.cwd()
+          end,
           settings = {
             pyright = {
               -- Using Ruff's import organizer
