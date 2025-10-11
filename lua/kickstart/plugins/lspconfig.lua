@@ -195,30 +195,31 @@ return {
       --  - capabilities (table): Override fields in capabilities. Can be used to disable certain LSP features.
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
+      local util = require 'lspconfig.util'
       local servers = {
         ty = {
           settings = {
             ty = {},
           },
         },
-        -- pyright = {
-        --   root_dir = function(fname)
-        --     -- always use the folder where nvim was started
-        --     return util.root_pattern 'pyrightconfig.json'(fname) or util.find_git_ancestor(fname) or vim.loop.cwd()
-        --   end,
-        --   settings = {
-        --     pyright = {
-        --       -- Using Ruff's import organizer
-        --       disableOrganizeImports = true,
-        --     },
-        --     python = {
-        --       analysis = {
-        --         -- Ignore all files for analysis to exclusively use Ruff for linting
-        --         -- ignore = { "*" },
-        --       },
-        --     },
-        --   },
-        -- },
+        pyright = {
+          root_dir = function(fname)
+            -- always use the folder where nvim was started
+            return util.root_pattern 'pyrightconfig.json'(fname) or util.find_git_ancestor(fname) or vim.loop.cwd()
+          end,
+          settings = {
+            pyright = {
+              -- Using Ruff's import organizer
+              disableOrganizeImports = true,
+            },
+            python = {
+              analysis = {
+                -- Ignore all files for analysis to exclusively use Ruff for linting
+                -- ignore = { "*" },
+              },
+            },
+          },
+        },
         ruff = {
           on_attach = function(client, bufnr)
             if client.name == 'ruff-lsp' then
@@ -255,12 +256,13 @@ return {
       }
 
       -- This is required to make ty work for now as far as I can tell - at least this is working
-      vim.lsp.enable 'ty'
-      vim.lsp.config('ty', {
-        cmd = { 'ty', 'server' },
-        filetypes = { 'python' },
-        single_file_support = true,
-      })
+      -- It's very fast, but jump to definition is flaky so disabling for now
+      -- vim.lsp.enable 'ty'
+      -- vim.lsp.config('ty', {
+      --   cmd = { 'ty', 'server' },
+      --   filetypes = { 'python' },
+      --   single_file_support = true,
+      -- })
 
       -- Ensure the servers and tools above are installed
       --
