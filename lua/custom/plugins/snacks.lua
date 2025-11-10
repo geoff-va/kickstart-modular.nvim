@@ -11,13 +11,71 @@ return {
     explorer = { enabled = true },
     indent = { enabled = true },
     input = { enabled = true },
-    picker = { enabled = true, layout = { preset = 'custom_telecope' } },
+    picker = {
+      enabled = true,
+      layout = { preset = 'custom_telecope' },
+      sources = {
+        gh_issue = {},
+        gh_pr = {},
+        explorer = {
+          actions = {
+            search_in_directory = {
+              action = function(_, item)
+                if not item then
+                  return
+                end
+                local dir = vim.fn.fnamemodify(item.file, ':p:h')
+                Snacks.picker.grep {
+                  cwd = dir,
+                  cmd = 'rg',
+                  args = {
+                    '-g',
+                    '!.git',
+                    '-g',
+                    '!node_modules',
+                    '-g',
+                    '!dist',
+                    '-g',
+                    '!build',
+                    '-g',
+                    '!coverage',
+                    '-g',
+                    '!.DS_Store',
+                    '-g',
+                    '!.docusaurus',
+                    '-g',
+                    '!.dart_tool',
+                  },
+                  show_empty = true,
+                  hidden = true,
+                  ignored = true,
+                  follow = false,
+                  supports_live = true,
+                }
+              end,
+            },
+          },
+          win = {
+            list = {
+              keys = {
+                ['s'] = 'search_in_directory',
+              },
+            },
+          },
+        },
+      },
+    },
     notifier = { enabled = true },
     quickfile = { enabled = true },
     scope = { enabled = true },
     scroll = { enabled = false },
     statuscolumn = { enabled = true },
     words = { enabled = true },
+    gh = {
+      -- your gh configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
+    },
   },
   keys = {
     -- Top Pickers & Explorer
@@ -420,6 +478,34 @@ return {
           },
         }
       end,
+    },
+    {
+      '<leader>gi',
+      function()
+        Snacks.picker.gh_issue()
+      end,
+      desc = 'GitHub Issues (open)',
+    },
+    {
+      '<leader>gI',
+      function()
+        Snacks.picker.gh_issue { state = 'all' }
+      end,
+      desc = 'GitHub Issues (all)',
+    },
+    {
+      '<leader>gp',
+      function()
+        Snacks.picker.gh_pr()
+      end,
+      desc = 'GitHub Pull Requests (open)',
+    },
+    {
+      '<leader>gP',
+      function()
+        Snacks.picker.gh_pr { state = 'all' }
+      end,
+      desc = 'GitHub Pull Requests (all)',
     },
   },
   init = function()
