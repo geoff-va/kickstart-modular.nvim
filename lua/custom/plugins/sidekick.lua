@@ -1,8 +1,18 @@
-local draft_pr = "Please create a draft PR for this issue. Don't add a body, just the title and open the web "
-  .. 'interface. Print out the summary in markdown so I can paste it in.'
-local update_versions = 'Please update relevant app versions in in their respective files according to semver. (setup.py, pyproject.toml, etc)'
-local update_changelog = 'Please add changelog entries or update the current one based on the changes made. Entries should have a link to the'
-  .. 'github issue if one exists and can should capture the main changes made, but should be terse.'
+local draft_pr = "Create a draft PR for the current branch. Don't pass in a body so it uses the default template. "
+  .. "The PR name should be the same as the branch with -'s replaced by spaces. "
+  .. 'Reread the PR body. Modify checkboxes based on what has been done and add a terse summary under '
+  .. "the Changes section (the exact changelog if we've already updated it)."
+local update_dm_versions = 'Please update relevant app versions in their respective files according '
+  .. 'to semver based on which files have been changed for each app (setup.py, pyproject.toml, etc). '
+  .. 'Update the root web/dl_manager/version.txt version according to semver based on the overall changes.'
+local update_versions = 'Please update relevant app versions in their respective files according '
+  .. 'to semver based on which files have been changed for each app (setup.py, pyproject.toml, etc). '
+local update_dm_changelog = "Please add/update changelog entries to each app's changelog based on which files have been modified. "
+  .. 'If the current branch starts with a GH issue number, prefix the changelog entry with a link '
+  .. 'to the issue and a one-line summary of the high level changes, then tersely add additional bullets '
+  .. 'to capture other major changes. Please add the child app Changes to the root Changelog '
+  .. 'indicating the app and version changes per existing formats.'
+local update_changelog = 'Please add/update changelog entries to the changelog based on the branches current changes.'
 
 return {
   'folke/sidekick.nvim',
@@ -14,8 +24,10 @@ return {
         enabled = true,
       },
       prompts = {
-        create_pr = draft_pr,
+        draft_pr = draft_pr,
+        update_dm_versions = update_dm_versions,
         update_versions = update_versions,
+        update_dm_changelog = update_dm_changelog,
         update_changelog = update_changelog,
       },
     },
