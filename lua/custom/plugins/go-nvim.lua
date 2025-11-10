@@ -8,8 +8,7 @@ return {
   enabled = true,
   config = function()
     require('go').setup {}
-    vim.lsp.config('gopls').setup {}
-    -- local cfg = require("go.lsp").config() -- config() return the go.nvim gopls setup
+    local cfg = require('go.lsp').config() -- config() return the go.nvim gopls setup
     -- require("lspconfig").gopls.setup(cfg)
   end,
   event = { 'CmdlineEnter' },
