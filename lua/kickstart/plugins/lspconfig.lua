@@ -197,11 +197,11 @@ return {
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local util = require 'lspconfig.util'
       local servers = {
-        ty = {
-          settings = {
-            ty = {},
-          },
-        },
+        -- ty = {
+        --   settings = {
+        --     ty = {},
+        --   },
+        -- },
         pyright = {
           root_dir = function(fname)
             -- always use the folder where nvim was started
