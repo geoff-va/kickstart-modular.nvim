@@ -1,17 +1,5 @@
-local draft_pr = "Create a draft PR for the current branch. Don't pass in a body so it uses the default template. "
-  .. "The PR name should be the same as the branch with -'s replaced by spaces. "
-  .. 'Reread the PR body. Modify checkboxes based on what has been done and add a terse summary under '
-  .. "the Changes section (the exact changelog if we've already updated it)."
-local update_dm_versions = 'Please update relevant app versions in their respective files according '
-  .. 'to semver based on which files have been changed for each app (setup.py, pyproject.toml, etc). '
-  .. 'Update the root web/dl_manager/version.txt version according to semver based on the overall changes.'
 local update_versions = 'Please update relevant app versions in their respective files according '
   .. 'to semver based on which files have been changed for each app (setup.py, pyproject.toml, etc). '
-local update_dm_changelog = "Please add/update changelog entries to each app's changelog based on which files have been modified. "
-  .. 'If the current branch starts with a GH issue number, prefix the changelog entry with a link '
-  .. 'to the issue and a one-line summary of the high level changes, then tersely add additional bullets '
-  .. 'to capture other major changes. Please add the child app Changes to the root Changelog '
-  .. 'indicating the app and version changes per existing formats.'
 local update_changelog = 'Please add/update changelog entries to the changelog based on the branches current changes.'
 
 return {
@@ -24,10 +12,7 @@ return {
         enabled = true,
       },
       prompts = {
-        draft_pr = draft_pr,
-        update_dm_versions = update_dm_versions,
         update_versions = update_versions,
-        update_dm_changelog = update_dm_changelog,
         update_changelog = update_changelog,
       },
     },
